@@ -1,0 +1,16 @@
+  void func(vector<int>&num,int N,vector<int>&temp,int ind,int sum){
+        if(ind>=N){
+            temp.push_back(sum);
+            return;
+        }
+        func(num,N,temp,ind+1,sum+num[ind]);
+        func(num,N,temp,ind+1,sum);
+    }
+vector<int> subsetSum(vector<int> &num)
+{
+    // Write your code here.
+     vector<int>temp;
+    func(num,num.size(),temp,0,0);
+    sort(temp.begin(),temp.end());
+    return temp;
+}

@@ -1,0 +1,40 @@
+class Solution{
+    private:
+    void func(int row,int col,vector<vector<int>>&m,int n,vector<string>&temp,string s,
+    vector<vector<int>>&vis){
+        vis[row][col]=1;
+          if(row==n-1 && col==n-1){
+              temp.push_back(s);
+              return;
+          }
+        if(row-1>=0 && m[row-1][col]==1 && vis[row-1][col]==0){
+            vis[row-1][col]=1;
+            func(row-1,col,m,n,temp,s+'U',vis);
+            vis[row-1][col]=0;
+        }
+          if(row+1<n && m[row+1][col]==1 && vis[row+1][col]==0){
+            vis[row+1][col]=1;
+            func(row+1,col,m,n,temp,s+'D',vis);
+            vis[row+1][col]=0;
+        }
+          if(col-1>=0 && m[row][col-1]==1 && vis[row][col-1]==0){
+            vis[row][col-1]=1;
+            func(row,col-1,m,n,temp,s+'L',vis);
+            vis[row][col-1]=0;
+        }
+          if(col+1<n && m[row][col+1]==1 && vis[row][col+1]==0){
+            vis[row][col+1]=1;
+            func(row,col+1,m,n,temp,s+'R',vis);
+            vis[row][col+1]=0;
+        }
+    }
+    public:
+    vector<string> findPath(vector<vector<int>> &m, int n) {
+        // Your code goes here
+        vector<string>temp;
+        vector<vector<int>>vis(n,vector<int>(n,0));
+        string s="";
+        if(m[0][0]==1)func(0,0,m,n,temp,s,vis);
+        return temp;
+    }
+};

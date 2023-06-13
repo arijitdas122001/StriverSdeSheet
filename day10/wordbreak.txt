@@ -1,0 +1,24 @@
+#include <bits/stdc++.h> 
+void func(int ind,string &s,set<string>&st,vector<string>&ans,string temp){
+    int n=s.size();
+    if(ind==n){
+        ans.push_back(temp);
+        return;
+    }
+    string temp1="";
+    for(int i=ind;i<n;i++){
+        temp1+=s[i];
+        if(st.count(temp1)){
+            func(i+1,s,st,ans,temp+temp1+" ");
+        }
+    }
+}
+vector<string> wordBreak(string &s, vector<string> &dictionary)
+{
+    // Write your code here
+    set<string>st(dictionary.begin(),dictionary.end());
+    vector<string>ans;
+    string temp="";
+    func(0,s,st,ans,temp);
+    return ans;
+}

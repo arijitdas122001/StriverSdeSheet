@@ -1,0 +1,33 @@
+int findnoofsmallele(int middle,vector<int>&row){
+int low=0,high=row.size()-1;
+while(low<=high){
+    int mid=(high+low)/2;
+    if(row[mid]<=middle){
+        low=mid+1;
+    }else{
+        high=mid-1;
+    }
+}
+return low;
+}
+int getMedian(vector<vector<int>> &matrix)
+{
+    // Write your code here.
+    int low=1,high=1e5;
+    int n=matrix.size();
+    int m= matrix[0].size();
+    int midpoint=(n*m)/2;
+    while(low<=high){
+        int mid=(high+low)/2;
+        int cnt=0;
+        for (int i = 0; i < n; i++) {
+            cnt+=findnoofsmallele(mid,matrix[i]);
+        }
+        if(cnt<=midpoint){
+            low=mid+1;
+        }else{
+            high=mid-1;
+        }
+    }
+    return low;
+}

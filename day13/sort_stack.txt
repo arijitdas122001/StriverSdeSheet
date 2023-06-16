@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+void sort(int top,stack<int>&st){
+	if(st.empty() || st.top()<top){
+		st.push(top);
+		return;
+	}
+	int sttop=st.top();
+	st.pop();
+	sort(top,st);
+	st.push(sttop);
+}
+void sortStack(stack<int> &stack)
+{
+	// Write your code here;
+	if(stack.empty())return;
+	int top=stack.top();
+	stack.pop();
+	sortStack(stack);
+	sort(top,stack);
+}

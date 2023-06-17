@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+bool ispossible(int row,int col,vector<vector<int>>&vis,int n,int m){
+        return (row<n && row>=0 && col<m && col>=0 && vis[row][col]==0);
+    }
+int minTimeToRot(vector<vector<int>>& grid, int n, int m)
+{
+    // Write your code here. 
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        queue<pair<int,pair<int,int>>>q;
+        int time=0;
+        int dir[]={-1,0,1,0};
+        int dic[]={0,+1,0,-1};
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==2){
+                    q.push({0,{i,j}});
+                }
+            }
+        }
+        while(!q.empty()){
+            auto top=q.front();
+            int row=top.second.first;
+            int col=top.second.second;
+            int min=top.first;
+            q.pop();
+            time=max(time,min);
+            for(int i=0;i<4;i++){
+                int newr=row+dir[i];
+                int newc=col+dic[i];
+                if(ispossible(newr,newc,vis,n,m) && grid[newr][newc]==1){
+                    grid[newr][newc]=2;
+                    vis[newr][newc]=1;
+                    q.push({min+1,{newr,newc}});
+                }
+            }
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    return -1;
+                    break;
+                }
+            }
+        }
+        return time;
+}

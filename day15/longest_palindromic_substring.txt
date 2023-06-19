@@ -1,0 +1,50 @@
+#include <bits/stdc++.h>
+bool ispalindrome(int i,int j,string s, vector<vector<bool>>&dp){
+    if(i>=j){
+        return true;
+    }
+    if(dp[i][j]!=NULL)return dp[i][j];
+   if(s[i]!=s[j]){
+       dp[i][j]=false;
+       return dp[i][j];
+   }
+   if(j-i<=2){
+       dp[i][j]=true;
+       return dp[i][j];
+   }
+   return dp[i][j]=ispalindrome(i+1,j-1,s,dp);
+}
+string longestPalinSubstring(string s)
+{
+    // Write your code here.
+    int n=s.size();
+    string ans="";
+    int size=0;
+    vector<vector<bool>>dp(n,vector<bool>(n,false));
+    for(int i=0;i<n;i++){
+        for(int j=i;j<n;j++){
+            if(s[i]==s[j] && ispalindrome(i,j,s,dp)){
+                if(size<j-i+1){
+                    size=j-i+1;
+                    ans=s.substr(i,j-i+1);
+                }
+            }
+        }
+    }
+    for(int i=n-1;i>=0;i--){
+        for(int j=i;j<n;j++){
+           if(s[i]==s[j]){
+               if(j-i<=2){
+                   dp[i][j]=true;
+               }else{
+                   dp[i][j]=dp[i+1][j-1];
+               }
+           }
+           if(size<=j-i+1 && dp[i][j]==true){
+               size=j-i+1;
+               ans=s.substr(i,j-i+1);
+           }
+        }
+    }
+    return ans;
+}

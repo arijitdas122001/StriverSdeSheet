@@ -1,0 +1,14 @@
+int checheightblance(BinaryTreeNode<int>* root){
+    if(root==NULL)return 1;
+    int left=checheightblance(root->left);
+    int right=checheightblance(root->right);
+    if(left==-1 || right==-1)return -1;
+    if(abs(left-right)>1)return -1;
+    return max(left,right)+1;
+}
+bool isBalancedBT(BinaryTreeNode<int>* root) {
+    // Write your code here.
+    int decideno=checheightblance(root);
+    if(decideno==-1)return false;
+    return true;
+}

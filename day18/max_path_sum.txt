@@ -1,0 +1,17 @@
+class Solution {
+    private:
+    int helperfuncofindmaxsum(TreeNode*root,int &maxsum){
+        if(root==NULL)return 0;
+        int left=0,right=0;
+        left=max(left,helperfuncofindmaxsum(root->left,maxsum));
+        right=max(right,helperfuncofindmaxsum(root->right,maxsum));
+        maxsum=max(maxsum,left+right+root->val);
+        return root->val+max(left,right);
+    }
+public:
+    int maxPathSum(TreeNode* root) {
+        int maxsum=INT_MIN;
+        helperfuncofindmaxsum(root,maxsum);
+        return maxsum;
+    }
+};

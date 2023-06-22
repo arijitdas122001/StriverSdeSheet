@@ -1,0 +1,15 @@
+int helper(TreeNode<int>*root,int &diameter){
+    if(root==NULL)return 0;
+    int left=0,right=0;
+    left=helper(root->left, diameter);
+    right=helper(root->right, diameter);
+    diameter=max(diameter,left+right);
+    return 1+max(left,right);
+}
+int diameterOfBinaryTree(TreeNode<int> *root)
+{
+	// Write Your Code Here.
+    int diameter=0;
+    helper(root,diameter);
+    return diameter;
+}

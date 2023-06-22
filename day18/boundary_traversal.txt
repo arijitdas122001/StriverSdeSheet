@@ -1,0 +1,41 @@
+bool isleaf(TreeNode<int>*node){
+return node->left==NULL && node->right==NULL;
+}
+void storingleftnode(TreeNode<int>*root,vector<int>&res){
+TreeNode<int>*curr=root->left;
+while(curr!=NULL){
+    if(!isleaf(curr))res.push_back(curr->data);
+    if(curr->left)curr=curr->left;
+    else curr=curr->right;
+}
+}
+void storingleafnodes(TreeNode<int>*root,vector<int>&res){
+   if(root==NULL)return;
+    if(root->left)storingleafnodes(root->left, res);
+    if(isleaf(root))res.push_back(root->data);
+    if(root->right)storingleafnodes(root->right, res);
+}
+void storingrightnodes(TreeNode<int>*root,vector<int>&res){
+    TreeNode<int>*curr=root->right;
+    stack<TreeNode<int>*>st;
+    while(curr!=NULL){
+        if(!isleaf(curr))st.push(curr);
+        if(curr->right)curr=curr->right;
+        else curr=curr->left;
+    }
+    while(!st.empty()){
+        TreeNode<int>*top=st.top();
+        st.pop();
+        res.push_back(top->data);
+    }
+}
+vector<int> traverseBoundary(TreeNode<int>* root){
+    // Write your code here.
+    vector<int>res;
+    if(root==NULL)return res;
+    if(!isleaf(root))res.push_back(root->data);
+    storingleftnode(root,res);
+    storingleafnodes(root,res);
+    storingrightnodes(root,res);
+    return res;
+}

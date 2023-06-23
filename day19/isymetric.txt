@@ -1,0 +1,13 @@
+bool issame(BinaryTreeNode<int>*l,BinaryTreeNode<int>*r){
+    if(l==NULL || r==NULL)return l==r;
+    if(l->data!=r->data)return false;
+    bool left=issame(l->left, r->right);
+    bool righ=issame(l->right, r->left);
+    return left && right;
+}
+bool isSymmetric(BinaryTreeNode<int>* root)
+{
+    // Write your code here.    
+    if(root==NULL)return true;
+    return issame(root->left,root->right);
+}

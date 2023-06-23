@@ -1,0 +1,25 @@
+vector<int> bottomView(BinaryTreeNode<int> * root){
+
+    // Write your code here.
+    map<int,int>mp;
+    queue<pair<BinaryTreeNode<int>*,int>>q;
+    q.push({root,0});
+    while(!q.empty()){
+        auto top=q.front();
+        q.pop();
+        BinaryTreeNode<int>*node=top.first;
+        int ver=top.second;
+        mp[ver]=node->data;
+        if(node->left){
+            q.push({node->left,ver-1});
+        }
+        if(node->right){
+            q.push({node->right,ver+1});
+        }
+    }
+    vector<int>ans;
+    for(auto it:mp){
+        ans.push_back(it.second);
+    }
+    return ans;
+}

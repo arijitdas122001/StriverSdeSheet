@@ -1,0 +1,27 @@
+void changeTree(BinaryTreeNode < int > * root) {
+    // Write your code here.
+    if(root==NULL)return;
+    int childsum=0;
+    if(root->left){
+        childsum+=root->left->data;
+    }
+    if(root->right){
+        childsum+=root->right->data;
+    }
+    if(childsum>=root->data){
+        root->data=childsum;
+    } else {
+        if(root->left)root->left->data=childsum;
+        else if(root->right)root->right->data=childsum;
+    }
+    changeTree(root->left);
+    changeTree(root->right);
+    int returningsum=0;
+    if(root->left){
+        returningsum+=root->left->data;
+    }
+    if(root->right){
+        returningsum+=root->right->data;
+    }
+    root->data=returningsum;
+}  

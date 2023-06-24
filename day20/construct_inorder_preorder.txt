@@ -1,0 +1,21 @@
+class Solution {
+    private:
+    TreeNode*completeTree(vector<int>&preorder,int preleft,int preright,vector<int>&inorder,int inleft,int inright,map<int,int>&hash){
+        if(preleft>preright || inleft>inright)return NULL;
+        TreeNode*root=new TreeNode(preorder[preleft]);
+        int ind=hash[root->val];
+        root->left=completeTree(preorder,preleft+1,preleft+(ind-inleft),inorder,inleft,ind-1,hash);
+        root->right=completeTree(preorder,(preleft+(ind-inleft))+1,preright,inorder,ind+1,inright,hash);
+        return root;
+    }
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n=preorder.size();
+        map<int,int>hash;
+        for(int i=0;i<n;i++){
+            hash[inorder[i]]=i;
+        }
+        TreeNode*root=completeTree(preorder,0,n-1,inorder,0,n-1,hash);
+        return root;
+    }
+};

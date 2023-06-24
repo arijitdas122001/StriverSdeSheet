@@ -1,0 +1,19 @@
+TreeNode*buildTree(vector<int>&postOrder,int postleft,int postright,vector<int>&inOrder,int inleft,int inright
+map<int,int>&hash){
+     if(postleft>postright || inleft>inright)return NULL;
+     TreeNode*root=new TreeNode(postOrder[postright]);
+     int ind=hash[root->data];
+     root->left=buildTree(postOrder, postleft, (ind-inleft)-1,inOrder,inleft,ind-1);
+     root->right=buildTree(postOrder,((ind-inleft)-1)+1,postright-1,inOrder,ind+1,inright);
+     return root;
+}
+TreeNode<int>* getTreeFromPostorderAndInorder(vector<int>& postOrder, vector<int>& inOrder) 
+{
+	// Write your code here.
+     map<int,int>hash
+     for(int i=0;i<n;i++){
+          hash[inOrder[i]]=i;
+     }
+     TreeNode*root=buildTree(postOrder,postleft,postright,inOrder,inleft,inright,hash);
+     return root;
+}

@@ -1,0 +1,16 @@
+int lowestCommonAncestor(TreeNode<int> *root, int p, int q)
+{
+	//    Write your code here
+        if(root==NULL)return root;
+        if(root->data==p||root->data==q)return root;
+        TreeNode*left=lowestCommonAncestor(root->left,p,q);
+        TreeNode*right=lowestCommonAncestor(root->right,p,q);
+        if((left->data==p && right->data==q) || (left->data==q && right->data==p)){
+            return root;
+        }
+        else if(left==NULL){
+            return right;
+        }else{
+            return left;
+        }
+}

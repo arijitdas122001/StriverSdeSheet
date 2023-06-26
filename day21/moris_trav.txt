@@ -1,0 +1,55 @@
+
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        TreeNode*curr=root;
+        vector<int>inorder;
+        while(curr!=NULL){
+           if(curr->left==NULL){
+            inorder.push_back(curr->val);
+               curr=curr->right;
+           }else{
+               TreeNode*next=curr->left;
+               while(next->right && next->right!=curr){
+                   next=next->right;
+               }
+               if(next->right==NULL){
+                   next->right=curr;
+                   curr=curr->left;
+               }else{
+                  next->right=NULL;
+                  inorder.push_back(curr->val);
+                  curr=curr->right;
+               }
+           }
+        }
+        return inorder;
+    }
+};
+class Solution {
+public:
+    vector<int> preorderTraversal(TreeNode* root) {
+        TreeNode*curr=root;
+        vector<int>preorder;
+        while(curr!=NULL){
+           if(curr->left==NULL){
+            inorder.push_back(curr->val);
+               curr=curr->right;
+           }else{
+               TreeNode*next=curr->left;
+               while(next->right && next->right!=curr){
+                   next=next->right;
+               }
+               if(next->right==NULL){
+                   next->right=curr;
+                   preorder.push_back(curr->val);
+                   curr=curr->left;
+               }else{
+                  next->right=NULL;
+                  curr=curr->right;
+               }
+           }
+        }
+        return preorder;
+    }
+};

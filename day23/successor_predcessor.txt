@@ -1,0 +1,32 @@
+int findPred(BinaryTreeNode<int>*root,int key){
+    int var=-1;
+    while(root){
+    if (root->data<key) {
+    if(root->data!=key)var=root->data;
+    root =root->right;
+  }else{
+      root=root->left;
+  }
+    }
+    return var;
+}
+int findSuccessor(BinaryTreeNode<int>*root,int key){
+int var=-1;
+while(root){
+  if (root->data > key) {
+      var=root->data;
+    root =root->left;
+  }else{
+      root=root->right;
+  }
+}
+return var;
+}
+pair<int,int> predecessorSuccessor(BinaryTreeNode<int>* root, int key)
+{
+    // Write your code here
+    if(root==NULL)return {NULL,NULL};
+    int successsor=findSuccessor(root,key);
+    int pred=findPred(root,key);
+    return {pred,successsor};
+}

@@ -1,0 +1,31 @@
+class BSTiterator
+{
+    public:
+     stack<TreeNode<int>*>st;
+    void pushallleft(TreeNode<int>*root){
+        while(root){
+            st.push(root);
+            root=root->left;
+        }
+    }
+    BSTiterator(TreeNode<int> *root)
+    {
+        // write your code here
+         pushallleft(root);
+    }
+
+    int next()
+    {
+        // write your code here
+        TreeNode<int>*top=st.top();
+        st.pop();
+        pushallleft(top->right);
+        return top->data;
+    }
+
+    bool hasNext()
+    {
+        // write your code here
+          return !st.empty();
+    }
+};

@@ -1,0 +1,28 @@
+ class Nodevalue{
+     public:
+     int sum,minvalue,maxvalue;
+     Nodevalue(int sum,int minvalue,int maxvalue){
+         this->sum=sum;
+         this->minvalue=minvalue;
+         this->maxvalue=maxvalue;
+     }
+ };
+class Solution {
+    private:
+    Nodevalue largestbst(TreeNode*root){
+    if(root==NULL) return Nodevalue(0,INT_MAX,INT_MIN);
+    auto  left=largestbst(root->left);
+    auto right=largestbst(root->right);
+    if(left.maxvalue<root->val && right.minvalue>root->val){
+         sum = max(sum, root->val + left.sum + right.sum);
+        return Nodevalue(left.sum+right.sum+root->val,min(left.minvalue,root->val),max(right.maxvalue,root->val));
+    }
+    return Nodevalue(max(left.sum,right.sum),INT_MIN,INT_MAX);
+    }
+public:
+int sum=0;
+    int maxSumBST(TreeNode* root) {
+        largestbst(root).sum;
+        return sum>0?sum:0;
+    }
+};

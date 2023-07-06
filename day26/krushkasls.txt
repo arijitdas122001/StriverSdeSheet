@@ -1,0 +1,85 @@
+#include <bits/stdc++.h> 
+class DisjointSet
+{
+   vector<int> rank, parent,size;
+public: 
+    DisjointSet(int n)
+    {
+        rank.resize(n+1, 0);
+        parent.resize(n + 1);
+        size.resize(n+1,0);
+        for (int i = 0; i <=n; i++)
+        {
+            parent[i] = i;
+        }
+    }
+    int findparent(int u)
+    {
+        // if the parent is himself
+        if (u == parent[u])
+        {
+            return u;
+        }
+        return /*this is where we are doing parh compressin*/ parent[u] = /*this is normal findparent function*/ findparent(parent[u]);
+    }
+    void unionByrank(int u, int v)
+    {
+        int up = findparent(u);
+        int uv = findparent(v);
+        if(up==uv)return;
+        if (rank[up] < rank[uv])
+        {
+            parent[up] = uv;
+        }
+        else if(rank[up]>rank[uv])
+        {
+            parent[uv] = up;
+        }
+        else{
+            parent[uv]=up;
+            rank[up]++;
+        }
+    }
+    void unionBysize(int u, int v)
+    {
+        int up = findparent(u);
+        int uv = findparent(v);
+        if(size[up]>size[uv]){
+            parent[uv]=up;
+            size[up]+=size[uv];
+        }
+        else{
+            parent[up]=uv;
+            size[uv]+=size[up];
+        }
+    }
+};
+int kruskalMST(int n, int m, vector<vector<int>> &graph) {
+	// Write your code here.
+	// vector<pair<int,pair<int,int>>>adj;
+	// n+m
+	// for(auto it:graph){
+	// 	int u=it[0];
+	// 	int v=it[1];
+	// 	int wt=it[3];
+	// 	adj.push_back({wt,{u,v}});
+	// }
+	// sort(adj.begin(),adj.end());
+	// m log n
+	sort(graph.begin(),graph.end(),[&](vector<int>&a,vector<int>&b){
+		return a[2]<b[2];
+	});
+	int mst=0;
+	DisjointSet ds(n);
+	// m 4 alpha
+	for(auto it:graph){
+		int wt=it[2];
+		int u=it[0];
+		int v=it[1];
+		if(ds.findparent(u)!=ds.findparent(v)){
+          mst+=wt;
+		  ds.unionByrank(u, v);
+		}
+	}
+	return mst;
+}

@@ -1,0 +1,32 @@
+#include <bits/stdc++.h> 
+int maxresult(int currind,int prevind,vector<int>&rack,int n,vector<vector<int>>&dp){
+	if(currind>=n)return 0;
+	int maxpoint=0;
+	if(dp[currind][prevind+1]!=-1)return dp[currind][prevind+1];
+	// notchoose
+	maxpoint=max(maxpoint,0+maxresult(currind+1, prevind, rack, n,dp));
+	// choose
+        if (prevind == -1 || rack[prevind] < rack[currind]) {
+          maxpoint = max(maxpoint, rack[currind] + maxresult(currind + 1,
+                                                             currind, rack, n,dp));
+        }
+        dp[currind][prevind+1]=maxpoint;
+		return dp[currind][prevind+1];
+}
+int maxIncreasingDumbbellsSum(vector<int> &rack, int n)
+{
+	// Write your code here
+	vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+	for(int i=n-1;i>=0;i--){
+		for(int j=i-1;j>=-1;j--){
+			int maxpoint=0;
+			maxpoint=max(maxpoint,0+dp[i+1][j+1]);
+			if(j==-1 || rack[j]<rack[i]){
+				maxpoint=max(maxpoint,rack[i]+dp[i+1][i+1]);
+			}
+			dp[i][j+1]=maxpoint;
+		}
+	}
+	// return maxresult(0,-1,rack,n,dp)
+	return dp[0][0];
+}

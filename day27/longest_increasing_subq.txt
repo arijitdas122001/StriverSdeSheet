@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+int longestIncreasingSubsequence(int nums[], int n)
+{
+    // Write Your Code here
+    if(n==0)return 0;
+        // vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        // // return getMaxlength(0,-1,nums,n,dp);
+        // for(int i=n-1;i>=0;i--){
+        //     for(int j=i-1;j>=-1;j--){
+        //         int maxi=0;
+        //         maxi=max(maxi,0+dp[i+1][j+1]);
+        //         if(j==-1 || nums[j]<nums[i]){
+        //             maxi=max(maxi,1+dp[i+1][i+1]);
+        //         }
+        //         dp[i][j+1]=maxi;
+        //     }
+        // }
+        // return dp[0][0];
+        vector<int>temp;
+        temp.push_back(nums[0]);
+        for(int i=1;i<n;i++){
+            if(temp.back()<nums[i]){
+                temp.push_back(nums[i]);
+            }
+            else{
+                int ind=lower_bound(temp.begin(),temp.end(),nums[i])-temp.begin();
+                temp[ind]=nums[i];
+            }
+        }
+        return temp.size();
+}

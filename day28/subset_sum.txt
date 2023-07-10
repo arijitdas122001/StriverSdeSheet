@@ -1,0 +1,24 @@
+class Solution {
+    private:
+    bool ispossible(int ind,int currsum,int sum,vector<int>&nums,vector<vector<int>>&dp){
+        if(sum==currsum)return true;
+        if(ind==0) return sum==currsum;
+        if(dp[ind][currsum]!=-1)return dp[ind][currsum];
+        // not-take
+        int nottake=ispossible(ind-1,currsum,sum,nums,dp);
+        // take
+        int take=ispossible(ind-1,currsum+nums[ind],sum,nums,dp);
+        return dp[ind][currsum]=take | nottake;
+    }
+public:
+    bool canPartition(vector<int>& nums) {
+        int n=nums.size();
+        int sum=0;
+        for(auto it:nums){
+            sum+=it;
+        }
+        if(sum%2!=0)return false;
+        vector<vector<int>>dp(n,vector<int>((sum)+1,-1));
+        return ispossible(n-1,0,sum/2,nums,dp);
+    }
+};

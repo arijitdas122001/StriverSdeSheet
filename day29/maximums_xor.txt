@@ -1,0 +1,24 @@
+
+ int maximumXor(vector<int> A) {
+
+  // Write your code here.
+
+  Trie trie;
+
+  for(auto it:A){
+
+      trie.insert(it);
+
+  }
+
+  int maxi=0;
+
+  for(auto it:A){
+
+      maxi=max(maxi,trie.getmax(it));
+
+  }
+
+  return maxi;
+
+}
